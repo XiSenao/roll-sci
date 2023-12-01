@@ -1,21 +1,13 @@
 {
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "baseUrl": ".",
     "esModuleInterop": true,
-    "lib": ["ESNext", "DOM"],
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "paths": {
-      "~/*": ["./src/*"]
-    },
-    "resolveJsonModule": true,
-    "sourceMap": true,
-    "strict": true,
-    "target": "ESNext"
+    "declaration": false,
+    "resolveJsonModule": true
   },
-  "include": ["./src/**/*.ts", "./tests/**/*.test.ts"],
-  "exclude": ["node_modules", "dist"]
+  "include": ["./src/**/*.ts", "rollup.config.ts", "rollup.dts.config.ts"],
+  "exclude": [
+    "**/dist",
+    "**/node_modules"
+  ]
 }

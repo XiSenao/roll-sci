@@ -1,0 +1,11 @@
+#!/bin/sh
+## sci vite-project-inject
+cd packages/vite
+
+BRANCH=$(git branch --contains "$1" 2>/dev/null | sed -n 's/^\* \(.*\)/\1/p')
+
+if [ -n "$BRANCH" ] && [ "${BRANCH%%test/*}" != "$BRANCH" ]; then
+  git clone git@github.com:XiSenao/vite-tests-template.git
+fi
+
+cd ../../
