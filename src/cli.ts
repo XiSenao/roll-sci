@@ -10,11 +10,14 @@ const cleanOptions = (option: GlobalCLIOptions) => {
 
 cli
   .command("test", "test for production")
-  .option("--vite-project", "test for vite project")
+  .option("--vite", "test for vite project")
   .action(async (root, option: GlobalCLIOptions) => {
-    const testOption = cleanOptions(option);
-    const { injectCodeOnViteProject } = await import(
-      "./vite-project-test/inject"
-    );
-    await injectCodeOnViteProject({ root, ...testOption });
+    if (root.vite) {
+      console.log(`------------------------ Test for vite project ------------------------\n`);
+      const testOption = cleanOptions(option);
+      const { injectCodeOnViteProject } = await import(
+        "./vite-project-test/inject"
+      );
+      await injectCodeOnViteProject({ root, ...testOption });
+    }
   });

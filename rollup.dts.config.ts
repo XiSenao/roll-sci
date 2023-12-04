@@ -9,7 +9,6 @@ export default {
   },
   external: [
     /^node:*/,
-    ...Object.keys(pkg.dependencies),
     ...Object.keys(pkg.devDependencies),
   ],
   plugins: [dts({ respectExternal: true })],

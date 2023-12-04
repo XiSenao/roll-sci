@@ -1,13 +1,14 @@
 import commonjs from '@rollup/plugin-commonjs'
 import json from '@rollup/plugin-json'
 import resolve from '@rollup/plugin-node-resolve'
-import babel from '@rollup/plugin-babel'
+// import babel from '@rollup/plugin-babel'
 // import gzipPlugin from 'rollup-plugin-gzip'
 // import terser from '@rollup/plugin-terser'
 import typescript from '@rollup/plugin-typescript'
 import nodePolyfills from 'rollup-plugin-polyfill-node';
 import builtins from 'rollup-plugin-node-builtins';
 import nodeGlobal from 'rollup-plugin-node-globals';
+import copy from 'rollup-plugin-copy';
 
 // import camelCase from 'lodash.camelcase'
 
@@ -32,11 +33,16 @@ const plugins = [
     preferBuiltins: true,
     mainFields: ['browser']
   }),
-  babel({
-    exclude: 'node_modules/**',
-    extensions: ['.js', '.ts'],
-    babelHelpers: "runtime",
-    presets: ['@babel/preset-env']
+  // babel({
+  //   exclude: 'node_modules/**',
+  //   extensions: ['.js', '.ts'],
+  //   babelHelpers: "runtime",
+  //   presets: ['@babel/preset-env']
+  // })
+  copy({
+    targets: [
+      { src: 'src/vite-project-test/post-checkout', dest: 'dist' },
+    ]
   })
 ]
 
@@ -46,7 +52,7 @@ export default [
     output: [
       {
         dir: baseDir,
-        format: 'esm',
+        format: 'cjs',
         chunkFileNames: 'chunk-[format]-[hash].js',
       }
     ],
@@ -56,9 +62,9 @@ export default [
     input: 'src/cli.ts',
     output: {
       dir: baseDir,
-      format: 'esm',
+      format: 'cjs',
       chunkFileNames: 'chunk-[format]-[hash].js',
     },
     plugins
-  }
+  },
 ]

@@ -1,5 +1,5 @@
 {
-  "name": "roll-sci",  
+  "name": "roll-sci",
   "version": "0.1.0-alpha.0",
   "description": "Toolkit for the vite source repository",
   "bin": {
@@ -92,5 +92,8 @@
   },
   "directories": {
     "test": "tests"
+  },
+  "dependencies": {
+    "rollup-plugin-copy": "^3.5.0"
   }
 }

@@ -6,7 +6,6 @@ import type { GlobalCLIOptions } from "dep-types/cli";
 type getViteRootPathType = (url: string) => Promise<string | null>;
 
 export async function injectCodeOnViteProject(options: GlobalCLIOptions) {
-  console.log("TODO: ", options);
   const getViteRootPath: getViteRootPathType = async (url: string) => {
     const __filename = url.startsWith("/") ? url : fileURLToPath(url);
     const __dirname = dirname(__filename);
@@ -27,11 +26,22 @@ export async function injectCodeOnViteProject(options: GlobalCLIOptions) {
   var viteRootPath = await getViteRootPath(import.meta.url);
 
   if (viteRootPath) {
+    const vitePackageRootPath = join(viteRootPath, 'packages/vite');
     const gitPostCheckoutHookPath = join(
       viteRootPath,
       ".git/hooks/post-checkout",
     );
-    const postCheckoutContent = fs.readFileSync("./post-checkout", "utf8");
+    const postCheckoutContent = 
+      fs.readFileSync(join(__dirname, './post-checkout'), "utf8")
+        .replaceAll("__vitePackageRootPath__", vitePackageRootPath)
+        .replaceAll("__viteRootPath__", viteRootPath);
+    if (!fs.existsSync(join(
+      viteRootPath,
+      ".git/hooks",
+    ))) {
+      console.error(`--------------- Please initialize git ---------------\n`);
+      return;
+    }
     if (fs.existsSync(gitPostCheckoutHookPath)) {
       const data = fs.readFileSync(gitPostCheckoutHookPath, "utf8");
       if (!data.includes("## sci vite-project-inject")) {
@@ -39,13 +49,22 @@ export async function injectCodeOnViteProject(options: GlobalCLIOptions) {
         lines[0] = "\n";
         const newContent = lines.join("\n");
         const newPostCheckoutContent = postCheckoutContent + newContent;
-        fs.writeFileSync(
+        return fs.writeFileSync(
           gitPostCheckoutHookPath,
           newPostCheckoutContent,
           "utf8",
         );
       }
-    }
+    } 
     fs.writeFileSync(gitPostCheckoutHookPath, postCheckoutContent, "utf8");
+
+    fs.chmod(gitPostCheckoutHookPath, '755', (err) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      console.log('权限设置成功!!!');
+    });
+
   }
 }
