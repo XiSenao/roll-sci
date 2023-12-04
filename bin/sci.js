@@ -31,6 +31,6 @@ if (debugIndex > 0) {
 }
 
 function start() {
-  return import('../dist/cli.js')
+  return import('../dist/es/cli.js')
 }
 start();
