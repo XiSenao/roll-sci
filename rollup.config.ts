@@ -51,20 +51,68 @@ export default [
     input: `src/index.ts`,
     output: [
       {
-        dir: baseDir,
+        dir: `${baseDir}cjs`,
         format: 'cjs',
         chunkFileNames: 'chunk-[format]-[hash].js',
       }
     ],
-    plugins
+    plugins: [
+      ...plugins,
+      copy({
+        targets: [
+          { src: 'src/vite-project-test/post-checkout', dest: 'dist/cjs' },
+        ]
+      })
+    ]
   },
   {
     input: 'src/cli.ts',
     output: {
-      dir: baseDir,
+      dir: `${baseDir}cjs`,
       format: 'cjs',
       chunkFileNames: 'chunk-[format]-[hash].js',
     },
-    plugins
+    plugins: [
+      ...plugins,
+      copy({
+        targets: [
+          { src: 'src/vite-project-test/post-checkout', dest: 'dist/cjs' },
+        ]
+      })
+    ]
+  },
+  {
+    input: `src/index.ts`,
+    output: [
+      {
+        dir: `${baseDir}es`,
+        format: 'esm',
+        chunkFileNames: 'chunk-[format]-[hash].js',
+      }
+    ],
+    plugins: [
+      ...plugins,
+      copy({
+        targets: [
+          { src: 'src/vite-project-test/post-checkout', dest: 'dist/es' },
+        ]
+      })
+    ]
+  },
+  {
+    input: 'src/cli.ts',
+    output: {
+      dir: `${baseDir}es`,
+      format: 'esm',
+      chunkFileNames: 'chunk-[format]-[hash].js',
+    },
+    plugins: [
+      ...plugins,
+      copy({
+        targets: [
+          { src: 'src/vite-project-test/post-checkout', dest: 'dist/es' },
+        ]
+      })
+    ]
   },
 ]

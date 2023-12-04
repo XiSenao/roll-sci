@@ -1,6 +1,6 @@
 {
   "name": "roll-sci",
-  "version": "0.2.0-alpha.0",
+  "version": "0.2.0-alpha.1",
   "description": "Toolkit for the vite source repository",
   "bin": {
     "sci": "bin/sci.js"
@@ -14,13 +14,12 @@
   ],
   "license": "MIT",
   "packageManager": "pnpm@8.5.1",
-  "main": "./dist/index.js",
+  "main": "./dist/es/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
-      }
+      "import": "./dist/es/index.js",
+      "require": "./dist/cjs/index.js"
     },
     "./package.json": "./package.json"
   },

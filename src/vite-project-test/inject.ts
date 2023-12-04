@@ -31,6 +31,8 @@ export async function injectCodeOnViteProject(options: GlobalCLIOptions) {
       viteRootPath,
       ".git/hooks/post-checkout",
     );
+    const __filename = fileURLToPath(import.meta.url);
+    const __dirname = dirname(__filename);
     const postCheckoutContent = 
       fs.readFileSync(join(__dirname, './post-checkout'), "utf8")
         .replaceAll("__vitePackageRootPath__", vitePackageRootPath)
@@ -63,7 +65,7 @@ export async function injectCodeOnViteProject(options: GlobalCLIOptions) {
         console.error(err);
         return;
       }
-      console.log('权限设置成功!!!');
+      console.error(`--------------- Code injection successful ---------------\n`);
     });
 
   }

@@ -21,3 +21,6 @@ cli
       await injectCodeOnViteProject({ root, ...testOption });
     }
   });
+
+
+cli.parse();
