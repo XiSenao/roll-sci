@@ -1,5 +1,9 @@
 import dts from 'rollup-plugin-dts';
-import pkg from './package.json' assert { type: "json" };
+import fs from 'fs';
+
+const pkg = JSON.parse(
+  fs.readFileSync(new URL('./package.json', import.meta.url)).toString(),
+)
 
 export default {
   input: './temp/types/index.d.ts',
